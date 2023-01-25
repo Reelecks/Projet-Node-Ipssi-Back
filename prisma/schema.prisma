@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-//npx prisma format ::finit les relation tt seul
-//pnpm prisma studio pour afficher
-//prisma generate :: pour les imports
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,7 +20,7 @@ model Post {
 model Comment {
   id        String   @id @unique @default(uuid())
   createdAt DateTime @default(now())
-  texte     String
+  texte     String   
   postId    String
   post      Post     @relation(fields: [postId], references: [id])
   userId    String

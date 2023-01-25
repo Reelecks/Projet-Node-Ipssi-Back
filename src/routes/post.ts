@@ -97,7 +97,8 @@ app.put(
     })
 
 app.delete('/:uuid', 
-isUsersPost || isAdmin, 
+isUsersPost || isAdmin
+, 
 async (req, res) => {
     try {
         await db.post.delete({

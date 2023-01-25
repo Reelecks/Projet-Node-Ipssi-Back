@@ -22,7 +22,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
 
   const isAdmin: RequestHandler = async (req, res, next) => {
     try {
-      if (req.user.role == "ADMIN") {
+      if (req.user.role == 'ADMIN') {
         return next()
       }
       throw new Error('You should not be here')
