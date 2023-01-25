@@ -2,15 +2,13 @@ import express, { RequestHandler, Router } from 'express';
 import db from "../db";
 import { body, validationResult } from 'express-validator'
 
-const router = Router()
+const app = Router()
 
 const isUsersComment: RequestHandler = async (req, res, next) => {
     try {
       const isOwner = await db.comment.findFirstOrThrow({
         where: {
-          post: {
             userId: req.user.id
-          },
         }
       })
       if (isOwner) {
@@ -33,12 +31,19 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
     }
   } 
 
+  app.get('/', async (req, res) => {
+    const comment = await db.comment.findMany({
+        where: {
+            userId: req.user.id
+        }
+    })
+    return res.status(200).json(comment)
+})
 
-  router.post(
+  app.post(
     '/',
     body('postId').isUUID(),
     body('texte').exists().isString().notEmpty(),
-    isUsersComment,
     async (req, res) => {
       try {
         validationResult(req).throw()
@@ -57,7 +62,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
     }
   )
   
-  router.put(
+  app.put(
     '/:uuid',
     isUsersComment,
     body('texte').isLength({ min: 1 }),
@@ -79,7 +84,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
     }
   )
   
-  router.delete(
+  app.delete(
     '/:uuid',
     isUsersComment || isAdmin,
     async (req, res) => {
@@ -97,4 +102,4 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
     }
   )
 
-export default router
+export default app
