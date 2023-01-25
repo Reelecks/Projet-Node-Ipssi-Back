@@ -12,24 +12,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TodoList {
+model Post {
   id       String     @id @unique @default(uuid())
-  name     String
-  TodoItems TodoItem[]
+  title     String
+  text     String 
+  createdAt DateTime @default(now())
+  Comments Comment[]
   userId String
   user  User @relation(fields: [userId], references: [id])
 }
 
-model TodoItem {
+model Comment {
   id          String   @id @unique @default(uuid())
-  description String
-  todoListId  String
-  todoList    TodoList @relation(fields: [todoListId], references: [id])
+  createdAt DateTime @default(now())
+  texte String
+  postId  String
+  post    Post @relation(fields: [postId], references: [id])
+  userId String
+  user  User @relation(fields: [userId], references: [id])
 }
 
 model User{
   id String   @id @unique @default(uuid())
   username String @unique @db.VarChar(64)
   password String
-  todoLists TodoList[]
+  role Role @default(USER)
+  ListComments Comment[]
+  listPosts Post[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
