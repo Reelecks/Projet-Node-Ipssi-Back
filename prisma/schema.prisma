@@ -13,32 +13,32 @@ datasource db {
 }
 
 model Post {
-  id       String     @id @unique @default(uuid())
-  title     String
-  text     String 
-  createdAt DateTime @default(now())
-  Comments Comment[]
-  userId String
-  user  User @relation(fields: [userId], references: [id])
+  id        String    @id @unique @default(uuid())
+  title     String    @db.VarChar(25)
+  text      String
+  createdAt DateTime  @default(now())
+  Comments  Comment[]
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
 }
 
 model Comment {
-  id          String   @id @unique @default(uuid())
+  id        String   @id @unique @default(uuid())
   createdAt DateTime @default(now())
-  texte String
-  postId  String
-  post    Post @relation(fields: [postId], references: [id])
-  userId String
-  user  User @relation(fields: [userId], references: [id])
+  texte     String
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
-model User{
-  id String   @id @unique @default(uuid())
-  username String @unique @db.VarChar(64)
-  password String
-  role Role @default(USER)
+model User {
+  id           String    @id @unique @default(uuid())
+  username     String    @unique @db.VarChar(64)
+  password     String
+  role         Role      @default(USER)
   ListComments Comment[]
-  listPosts Post[]
+  listPosts    Post[]
 }
 
 enum Role {

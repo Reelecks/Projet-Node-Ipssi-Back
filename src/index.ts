@@ -1,8 +1,8 @@
 import express from 'express'
 import * as dotenv from 'dotenv'
 import userRoutes from './routes/user'
-import todoListRoutes from './routes/todoList'
-import todoItemRoutes from './routes/todoItem'
+import postRoutes from './routes/post'
+import commentRoutes from './routes/comment'
 import db from './db'
 import { protect } from './modules/auth'
 import { signIn, createNewUser } from './handlers/user'
@@ -22,7 +22,8 @@ app.get('/', (req, res) =>{
 })
 
 app.use('/api',protect,  [userRoutes])
-app.use('/api/todo', protect, [todoListRoutes])
-app.use('/api/todoItem', protect, [todoItemRoutes])
+app.use('/api/post', protect, [postRoutes])
+app.use('/api/comment', protect, [commentRoutes])
+
 app.post('/signup', createNewUser)
 app.post('/signin', signIn)
