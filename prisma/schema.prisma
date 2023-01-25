@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+//npx prisma format ::finit les relation tt seul
+//pnpm prisma studio pour afficher
+//prisma generate :: pour les imports
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TodoList {
+  id       String     @id @unique @default(uuid())
+  name     String
+  TodoItems TodoItem[]
+  userId String
+  user  User @relation(fields: [userId], references: [id])
+}
+
+model TodoItem {
+  id          String   @id @unique @default(uuid())
+  description String
+  todoListId  String
+  todoList    TodoList @relation(fields: [todoListId], references: [id])
+}
+
+model User{
+  id String   @id @unique @default(uuid())
+  username String @unique @db.VarChar(64)
+  password String
+  todoLists TodoList[]
+}
