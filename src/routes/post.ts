@@ -21,7 +21,7 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
     }
 }
 
-console.log('userId')
+//console.log('userId')
 
 app.get('/all', async (req, res) => {
     const allPost = await db.post.findMany({
@@ -85,6 +85,7 @@ app.post(
 
 app.put(
     '/:uuid',
+    isAdmin || isUsersPost, 
     body('title').exists().isString().notEmpty(),
     body('text').exists().isString().notEmpty(),
     async (req, res) => {
@@ -107,7 +108,7 @@ app.put(
     })
 //faire une condition qui vérifie le userId du post et le userId du signin
 app.delete('/:uuid', 
-isUsersPost || isAdmin, 
+isAdmin || isUsersPost, 
 async (req, res) => {
     try {
         await db.post.delete({

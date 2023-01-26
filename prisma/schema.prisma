@@ -20,7 +20,7 @@ model Post {
 model Comment {
   id        String   @id @unique @default(uuid())
   createdAt DateTime @default(now())
-  texte     String   
+  texte     String
   postId    String
   post      Post     @relation(fields: [postId], references: [id])
   userId    String

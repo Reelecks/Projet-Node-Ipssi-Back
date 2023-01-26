@@ -23,8 +23,9 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   } 
 
   const isAdmin: RequestHandler = async (req, res, next) => {
+    console.log(req.user)
     try {
-      if (req.user.role == 'ADMIN') {
+      if (req.user.role == "ADMIN") {
         return next()
       }
       throw new Error('You should not be here')
@@ -66,7 +67,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   
   app.put(
     '/:uuid',
-    isUsersComment || isAdmin,
+    isAdmin || isUsersComment,
     body('texte').isLength({ min: 1 }),
     async (req, res) => {
       try {
@@ -88,7 +89,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   
   app.delete(
     '/:uuid',
-    isUsersComment || isAdmin,
+    isAdmin || isUsersComment,
     async (req, res) => {
       try {
         const deletedId = req.params.uuid

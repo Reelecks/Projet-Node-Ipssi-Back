@@ -1,5 +1,6 @@
 //creer handler validator qui intervient avant les handler connexioin/creation qui vérifie le body req -> pas se répéter
 //express-validator lib 
+import { Role } from ".prisma/client";
 import { Request, RequestHandler } from "express";
 import db from "../db";
 import { comparePassword, createJWT, hashPassword } from "../modules/auth";
@@ -8,6 +9,7 @@ interface TypeRequestParam extends Request {
   body: {
     username?: string;
     password?: string;
+    role?: Role;
   };
 }
 
@@ -16,7 +18,7 @@ export const createNewUser: RequestHandler = async (
   res
 ) => {
   try {
-    if (!(req.body?.username && req.body?.password)) {
+    if (!(req.body?.username && req.body?.password && req.body?.role)) {
       throw new Error("Invalid body provided");
     }
     const hash = await hashPassword(req.body.password);
@@ -24,6 +26,7 @@ export const createNewUser: RequestHandler = async (
       data: {
         username: req.body.username,
         password: hash,
+        role: req.body.role,
       },
     });
     const token = createJWT(user);
