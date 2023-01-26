@@ -8,8 +8,9 @@
 ### Post
 |`/api/post`|`/api/post/all`|`/api/post/:uuid`|
 |----------|---------|-------|
-|Get all posts and comments from the logged in user, Post a post|Get all posts and comments|Get a post, Put to uptade a post, Delete a post|
-|Post a post|---------|-------|
+|Get all posts and comments from the logged in user|Get all posts and comments|Get a post|
+|Post a post|---------|Put to uptade a post|
+|----------|---------|Delete a post|
 
 
 ### Comment
