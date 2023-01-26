@@ -25,7 +25,7 @@ The objective of the project is to create the CRUD of a blog, we use node Js.
 ## Etape 1
 Clone the project where you wish
 ## Etape 2
-Create new database and put in `.env` DATABASE_URL and JWT_SECRET
+Create new database and put in `.env` DATABASE_URL"your link" and JWT_SECRET"your password"
 ## Etape 3
 Use the commande `$ pnpm install`
 ## Etape 4
