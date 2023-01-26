@@ -22,12 +22,24 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
 }
 
 app.get('/all', async (req, res) => {
-    const allPost = await db.post.findMany({
+    const currentYear = new Date().getFullYear();
+
+    const postsFromLastYear = await db.post.findMany({
         where: {
-            OR: [
-              { createdAt: {} },
-            ],
-          },
+            createdAt: {
+                lt: new Date(`${currentYear}-01-01`)
+            }
+        }
+    });
+    const postsFromThisYear = await db.post.findMany({
+        where: {
+            createdAt: {
+                gte: new Date(`${currentYear}-01-01`),
+                lt: new Date(`${currentYear + 1}-01-01`)
+            }
+        }
+    });
+    const allPost = await db.post.findMany({
         include: {
             Comments: true
         },
@@ -85,7 +97,7 @@ app.post(
             return res.status(200).json(createdPost)
         } catch (e) {
             console.log(e)
-            return res.status(400).json({ error: e || 'Cannot create todoList' })
+            return res.status(400).json({ error: e || 'Cannot create post' })
         }
     })
 
