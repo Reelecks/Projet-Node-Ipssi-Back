@@ -6,9 +6,9 @@ The objective of the project is to create the CRUD of a blog, we use node Js.
 
 ## Routes
 ### User
-|`/signup`|`/signin`|
-|----------|---------|
-|Post to create new user|Post to log|
+|`/signup`|`/signin`|`/api/user/:uuid`|
+|----------|---------|---------|
+|Post to create new user|Post to log|Delete a user (Admin only)|
 ### Post
 |`/api/post`|`/api/post/all`|`/api/post/:uuid`|
 |----------|---------|-------|
