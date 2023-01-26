@@ -21,6 +21,16 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
     }
 }
 
+console.log('userId')
+
+app.get('/all', async (req, res) => {
+    const allPost = await db.post.findMany({
+        include: {
+        Comments: true
+    }})
+    return res.status(200).json(allPost)
+})
+
 app.get('/', async (req, res) => {
     const post = await db.post.findMany({
         where: {
