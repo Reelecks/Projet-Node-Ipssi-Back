@@ -22,8 +22,9 @@ The objective of the project is to create the CRUD of a blog, we use node Js.
 |Post a comment|Delete a comment|
 
 ## To change
-### `.env`
+### .env
 `DATABASE_URL="postgres://node_ipssi_projet_0863_user:2oG08IjyC3I5TpcNp7dNZPw1Jn0yYsbT@dpg-cf8gisla499fsd2r2np0-a.frankfurt-postgres.render.com/node_ipssi_projet_0863"`
+
 `JWT_SECRET="2oG08IjyC3I5TpcNp7dNZPw1Jn0yYsbT"`
 
 # Installation du projet
