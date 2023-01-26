@@ -13,10 +13,11 @@ dotenv.config()
 const app = express()
 const PORT = config.port
 app.use(express.json())
+app.use(cors())
 app.listen(PORT, ()=>{
     console.log('Listening on localhost:', PORT)
 })
-app.use(cors())
+
 
 app.get('/', (req, res) =>{
     console.log(process.env.DATABASE_URL)
