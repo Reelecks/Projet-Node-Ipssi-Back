@@ -8,7 +8,9 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
     try {
       const isOwner = await db.comment.findFirstOrThrow({
         where: {
+          post:{
             userId: req.user.id
+          }
         }
       })
       if (isOwner) {
@@ -64,7 +66,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   
   app.put(
     '/:uuid',
-    isUsersComment,
+    isUsersComment || isAdmin,
     body('texte').isLength({ min: 1 }),
     async (req, res) => {
       try {
