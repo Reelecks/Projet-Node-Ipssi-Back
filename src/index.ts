@@ -7,6 +7,7 @@ import db from './db'
 import { protect } from './modules/auth'
 import { signIn, createNewUser } from './handlers/user'
 import config from './config'
+import cors = require('cors')
 dotenv.config()
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(express.json())
 app.listen(PORT, ()=>{
     console.log('Listening on localhost:', PORT)
 })
+app.use(cors())
 
 app.get('/', (req, res) =>{
     console.log(process.env.DATABASE_URL)
