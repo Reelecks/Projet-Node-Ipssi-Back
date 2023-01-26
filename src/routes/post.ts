@@ -9,8 +9,8 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
     try {
         const isOwner = await db.post.findFirstOrThrow({
             where: {
-                    userId: req.user.id
-                }
+                userId: req.user.id
+            }
         })
         if (isOwner) {
             return next()
@@ -21,13 +21,20 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
     }
 }
 
-//console.log('userId')
-
 app.get('/all', async (req, res) => {
     const allPost = await db.post.findMany({
+        where: {
+            OR: [
+              { createdAt: {} },
+            ],
+          },
         include: {
-        Comments: true
-    }})
+            Comments: true
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    })
     return res.status(200).json(allPost)
 })
 
@@ -47,8 +54,7 @@ app.get('/:uuid', async (req, res) => {
     try {
         const post = await db.post.findFirstOrThrow({
             where: {
-                id: req.params.uuid,
-                userId: req.user.id
+                id: req.params.uuid
             },
             include: {
                 Comments: true
@@ -85,7 +91,7 @@ app.post(
 
 app.put(
     '/:uuid',
-    isAdmin || isUsersPost, 
+    isAdmin || isUsersPost,
     body('title').exists().isString().notEmpty(),
     body('text').exists().isString().notEmpty(),
     async (req, res) => {
@@ -107,19 +113,19 @@ app.put(
         }
     })
 //faire une condition qui vérifie le userId du post et le userId du signin
-app.delete('/:uuid', 
-isAdmin || isUsersPost, 
-async (req, res) => {
-    try {
-        await db.post.delete({
-            where: {
-                id: req.params.uuid
-            }
-        })
-        return res.status(200).json({ message: `Succesfully deleted ${req.params.uuid}` })
-    } catch (e) {
-        return res.status(400).json({ message: e || 'Error while deleting' })
-    }
-})
+app.delete('/:uuid',
+    isAdmin || isUsersPost,
+    async (req, res) => {
+        try {
+            await db.post.delete({
+                where: {
+                    id: req.params.uuid
+                }
+            })
+            return res.status(200).json({ message: `Succesfully deleted ${req.params.uuid}` })
+        } catch (e) {
+            return res.status(400).json({ message: e || 'Error while deleting' })
+        }
+    })
 
 export default app
