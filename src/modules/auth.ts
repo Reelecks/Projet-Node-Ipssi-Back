@@ -15,11 +15,13 @@ export const createJWT = (user: User) => {
 }
 //Permet de vérifier sic l'utilisateur envoie un token valide
 export const protect: RequestHandler = (req, res, next) => {
-    const bearer = req.headers.authorization
+    console.log(req.headers.cookie)
+    const bearer = req.headers.cookie
     if (!bearer) {
         return res.status(401).json({ message: 'Not authorized' })
     }
     const [, token] = bearer.split(' ') // récupère le token 
+    console.log(token)
     if (!token) {
         return res.status(401).json({ message: 'Not authorized' })
     }
