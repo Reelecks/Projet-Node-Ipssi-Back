@@ -41,7 +41,10 @@ app.get('/all', async (req, res) => {
     });
     const allPost = await db.post.findMany({
         include: {
-            Comments: true
+            Comments: {
+                include: { user:true}
+            },
+            user:true
         },
         orderBy: {
             createdAt: 'desc'
