@@ -23,7 +23,6 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   } 
 
   const isAdmin: RequestHandler = async (req, res, next) => {
-    console.log(req.user)
     try {
       if (req.user.role == "ADMIN") {
         return next()
