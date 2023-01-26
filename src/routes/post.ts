@@ -95,10 +95,9 @@ app.put(
             return res.status(400).json({ message: e || 'Error while updating' })
         }
     })
-
+//faire une condition qui vérifie le userId du post et le userId du signin
 app.delete('/:uuid', 
-isUsersPost || isAdmin
-, 
+isUsersPost || isAdmin, 
 async (req, res) => {
     try {
         await db.post.delete({
