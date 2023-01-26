@@ -69,7 +69,10 @@ app.get('/:uuid', async (req, res) => {
                 id: req.params.uuid
             },
             include: {
-                Comments: true
+                Comments: {
+                    include: { user:true}
+                },
+                user:true
             }
         })
 
