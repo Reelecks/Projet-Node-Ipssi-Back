@@ -13,8 +13,8 @@ The objective of the project is to create the CRUD of a blog, we use node Js.
 |`/api/post`|`/api/post/all`|`/api/post/:uuid`|`/api/post/filter`|
 |----------|---------|-------|-------|
 |Get all posts and comments from the logged in user|Get all posts and comments|Get a post|Get filter use "filter?from=1674820800000" for exemple|
-|Post a post|---------|Put to uptade a post|
-|----------|---------|Delete a post|
+|Post a post|---------|Put to uptade a post|----------|
+|----------|---------|Delete a post|----------|
 ### Comment
 |`/api/comment`|`/api/comment/:uuid`|
 |----------|---------|
