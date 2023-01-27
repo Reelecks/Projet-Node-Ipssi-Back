@@ -10,9 +10,9 @@ The objective of the project is to create the CRUD of a blog, we use node Js.
 |----------|---------|---------|
 |Post to create new user|Post to log|Delete a user (Admin only)|
 ### Post
-|`/api/post`|`/api/post/all`|`/api/post/:uuid`|
-|----------|---------|-------|
-|Get all posts and comments from the logged in user|Get all posts and comments|Get a post|
+|`/api/post`|`/api/post/all`|`/api/post/:uuid`|`/api/post/filter`|
+|----------|---------|-------|-------|
+|Get all posts and comments from the logged in user|Get all posts and comments|Get a post|Get filter use "filter?from=1674820800000" for exemple|
 |Post a post|---------|Put to uptade a post|
 |----------|---------|Delete a post|
 ### Comment
@@ -27,7 +27,7 @@ Clone the project where you wish
 ## Etape 2
 Create new database and put in `.env` DATABASE_URL"your link" and JWT_SECRET"your password"
 ## Etape 3
-Use the commande `$ pnpm install`
+Use the commande `$ pnpm install` & `$ pnpm init` 
 ## Etape 4
 Use the commande `$ pnpm prisma format`
 ## Etape 5

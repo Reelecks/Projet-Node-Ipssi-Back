@@ -38,30 +38,47 @@ app.get('/all', async (req, res) => {
     })
     return res.status(200).json(allPost)
 })
-/*
-app.get('/filter', async (req, res) => {
-    try{
-    const currentYear = new Date().getFullYear();
 
-    const postsFromLastYear = await db.post.findMany({
-        where: {
-            createdAt: {
-                lt: new Date(`${currentYear}-01-01`)
+app.get('/filter', async (req, res) => {
+    let filter={}
+    const date = new Date(Number(req.query.from))
+    if(req.query.from){
+        filter={
+            where:{
+                createdAt:{
+                    gte: date
+                }
             }
         }
-    });
-    const postsFromThisYear = await db.post.findMany({
-        where: {
-            createdAt: {
-                gte: new Date(`${timeStamp}`),
-            }
-        }
-    });
-    return timeStamp(); 
-} catch (e) {
-    return res.status(400).json({ message: 'Not found' })
-}
-})*/
+    }
+    const post = await db.post.findMany(filter)
+    return res.status(200).json(post)
+})
+
+// app.get('/filter', async (req, res) => {
+//     try{
+//     const postsFromThisYear = await db.post.findMany({
+//         where: {
+//             createdAt: {
+//                 gte: new Date(`${timeStamp}-01-01`),
+//             }
+//         }
+//     });
+//     return res.status(200).json(postsFromThisYear) 
+// } catch (e) {
+//     return res.status(400).json({ message: 'Not found' })
+// }
+// })
+
+  // const currentYear = new Date().getFullYear();
+
+    // const postsFromLastYear = await db.post.findMany({
+    //     where: {
+    //         createdAt: {
+    //             lt: new Date(`${currentYear}-01-01`)
+    //         }
+    //     }
+    // });
 
 app.get('/', async (req, res) => {
     const post = await db.post.findMany({
