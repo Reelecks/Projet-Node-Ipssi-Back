@@ -33,17 +33,17 @@ app.delete(
     }
   )
 
-// app.get('/user/:uuid',async (req, res)=>{
-//     const user = await db.user.findUnique({
-//         where:{
-//             id: req.params.uuid
-//         }
-//     })
-//     if(user){
-//         return res.status(200).json(req.user)
-//     }
-//     throw new Error('Cant Find this User')
-// })
+app.get('/user/',async (req, res)=>{
+    const user = await db.user.findUnique({
+        where:{
+            id: req.user.id
+        }
+    })
+    if(user){
+        return res.status(200).json(user)
+    }
+    throw new Error('Cant Find this User')
+})
 
 
 
