@@ -39,7 +39,6 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  console.log(process.env.DATABASE_URL);
   res.status(200).json({ message: "hello" });
 });
 

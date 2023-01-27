@@ -9,7 +9,6 @@ const app = Router();
 const isUsersPost: RequestHandler = async (req, res, next) => {
   try {
     if (req.user.role == "ADMIN") {
-      console.log("passed admin");
       return next();
     }
     const isOwner = await db.post.findFirstOrThrow({
@@ -18,7 +17,6 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
       },
     });
     if (isOwner) {
-      console.log("passed owner");
       return next();
     }
     throw new Error("You should not be here");
@@ -97,7 +95,6 @@ app.get("/", async (req, res) => {
 
 app.get("/:uuid", async (req, res) => {
   try {
-    console.log(req.params.uuid);
     const post = await db.post.findFirstOrThrow({
       where: {
         id: req.params.uuid,
@@ -132,7 +129,6 @@ app.post(
       });
       return res.status(200).json(createdPost);
     } catch (e) {
-      console.log(e);
       return res.status(400).json({ error: e || "Cannot create post" });
     }
   }
@@ -145,7 +141,6 @@ app.put(
   body("text").exists().isString().notEmpty(),
   async (req, res) => {
     try {
-      console.log("hello");
       validationResult(req).throw();
       const updatedPost = await db.post.update({
         where: {
