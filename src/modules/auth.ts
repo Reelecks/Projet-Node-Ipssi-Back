@@ -1,4 +1,4 @@
-import { User } from  ".prisma/client"
+import { User } from  "@prisma/client"
 import { RequestHandler } from 'express';
 import jwt from "jsonwebtoken";
 import * as bcrypt from 'bcrypt'

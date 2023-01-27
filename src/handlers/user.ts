@@ -1,6 +1,6 @@
 //creer handler validator qui intervient avant les handler connexioin/creation qui vérifie le body req -> pas se répéter
 //express-validator lib 
-import { Role } from ".prisma/client";
+import { Role } from "@prisma/client";
 import { Request, RequestHandler } from "express";
 import db from "../db";
 import { comparePassword, createJWT, hashPassword } from "../modules/auth";
