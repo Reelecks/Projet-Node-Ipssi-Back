@@ -24,18 +24,23 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
     }
 }
 
-// const admin: RequestHandler = async (req, res, next) => {
-//     try {
-//       if (req.user.role == "ADMIN") {
-//         return next()
-//       }
-//       throw new Error('You should not be here')
-//     } catch(e) {
-//       return res.status(400).json({ message: 'You are not the owner' })
-//     }
-//   } 
-
 app.get('/all', async (req, res) => {
+    const allPost = await db.post.findMany({
+        include: {
+            Comments: {
+                include: { user: true }
+            },
+            user: true
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
+    })
+    return res.status(200).json(allPost)
+})
+/*
+app.get('/filter', async (req, res) => {
+    try{
     const currentYear = new Date().getFullYear();
 
     const postsFromLastYear = await db.post.findMany({
@@ -52,19 +57,11 @@ app.get('/all', async (req, res) => {
             }
         }
     });
-    const allPost = await db.post.findMany({
-        include: {
-            Comments: {
-                include: { user: true }
-            },
-            user: true
-        },
-        orderBy: {
-            createdAt: 'desc'
-        }
-    })
-    return res.status(200).json(allPost)
-})
+    return timeStamp(); 
+} catch (e) {
+    return res.status(400).json({ message: 'Not found' })
+}
+})*/
 
 app.get('/', async (req, res) => {
     const post = await db.post.findMany({
@@ -80,6 +77,7 @@ app.get('/', async (req, res) => {
 
 app.get('/:uuid', async (req, res) => {
     try {
+        console.log(req.params.uuid)
         const post = await db.post.findFirstOrThrow({
             where: {
                 id: req.params.uuid
