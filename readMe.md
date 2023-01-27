@@ -24,6 +24,8 @@ the link of our API is https://nd-rl-blog-api.onrender.com/
 |Post a comment|Delete a comment|
 
 # Installation du projet
+we had some issue with prisma/client importation. Branch-back works fine on our localhost but didnt work online so we made production's branch to fix this
+
 ## Etape 1
 Clone the project where you wish
 ## Etape 2
