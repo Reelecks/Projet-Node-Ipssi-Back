@@ -12,27 +12,28 @@ dotenv.config();
 
 const app = express();
 const PORT = config.port;
-app.use(function (req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+// app.use(function (req, res, next) {
+//   // Website you wish to allow to connect
+//   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
     
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  // Request methods you wish to allow
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   // Request methods you wish to allow
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+//   );
 
-  // Request headers you wish to allow
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
+//   // Request headers you wish to allow
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
 
 
 
-  // Pass to next layer of middleware
-  next();
-});
+//   // Pass to next layer of middleware
+//   next();
+// });
+// app.options("*", cors());
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 app.listen(PORT, () => {
   console.log("Listening on localhost:", PORT);
 });
