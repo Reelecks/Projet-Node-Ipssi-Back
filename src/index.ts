@@ -7,14 +7,15 @@ import db from "./db";
 import { protect } from "./modules/auth";
 import { signIn, createNewUser } from "./handlers/user";
 import config from "./config";
-import cors = require("cors");
+import cors from "cors";
 dotenv.config();
 
 const app = express();
 const PORT = config.port;
+app.use(cors())
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
-//   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+//   res.setHeader("Access-Control-Allow-Origin", "*");
     
 //   res.setHeader("Access-Control-Allow-Credentials", "true");
 //   // Request methods you wish to allow
@@ -31,9 +32,8 @@ const PORT = config.port;
 //   // Pass to next layer of middleware
 //   next();
 // });
-// app.options("*", cors());
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.listen(PORT, () => {
   console.log("Listening on localhost:", PORT);
 });
