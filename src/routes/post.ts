@@ -164,20 +164,22 @@ app.put(
   }
 );
 
-app.delete("/:uuid", isUsersPost, async (req, res) => {
-  try {
-    const deletedId = req.params.uuid;
-    await db.post.delete({
-      where: {
-        id: deletedId,
-      },
-    });
-    return res
-      .status(200)  
-      .json({ message: `Successfully deleted ${deletedId}` });
-  } catch (e) {
-    return res.status(400).json({ e: e || "Error during deletion" });
-  }
-});
+app.delete(
+    '/:uuid',
+    isUsersPost,
+    async (req, res) => {
+      try {
+        const deletedId = req.params.uuid
+        await db.post.delete({
+          where: {
+            id: deletedId
+          } 
+        })
+       return res.status(200).json({ message: `Successfully deleted ${deletedId}`})
+      } catch(e) {
+        return res.status(400).json({ e: e || 'Error during deletion'})
+      }
+    }
+  )
 
 export default app;
