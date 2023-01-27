@@ -31,28 +31,28 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
     })
     return res.status(200).json(comment)
 })
+app.post(
+  '/:uuid',
+  body('texte').exists().isString().notEmpty(),
+  async (req, res) => {
+    try {
+      validationResult(req).throw()
+      const createdComment  = await db.comment.create({
+        data: {
+          postId: req.params?.uuid,
+          texte: req.body.texte,
+          userId: req.user.id
+        },
+      })
 
-  app.post(
-    '/',
-    body('postId').isUUID(),
-    body('texte').exists().isString().notEmpty(),
-    async (req, res) => {
-      try {
-        validationResult(req).throw()
-        const createdComment  = await db.comment.create({
-          data: {
-            postId: req.body.postId,
-            texte: req.body.texte,
-            userId: req.user.id
-          },
-        })
-  
-        return res.status(201).json(createdComment)
-      } catch (e) {
-        return res.status(400).json({ message: e || 'Error during creation'})
-      }
+      return res.status(201).json(createdComment)
+    } catch (e) {
+      return res.status(400).json({ message: e || 'Error during creation'})
     }
-  )
+  }
+)
+
+
   
   app.put(
     '/:uuid',
