@@ -3,6 +3,8 @@
 The objective of the project is to create the CRUD of a blog, we use node Js.
 
 # Use Projet 
+website can be seen on https://blog-ipssi.r-landais.com/
+the link of our API is https://nd-rl-blog-api.onrender.com/
 
 ## Routes
 ### User
