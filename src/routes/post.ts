@@ -1,12 +1,15 @@
+import { timeStamp } from "console";
 import { Request, RequestHandler, Response, Router } from "express";
 import { body, check, validationResult } from "express-validator";
 import db from "../db";
-import isAdmin from "./comment"
 
 const app = Router()
 
 const isUsersPost: RequestHandler = async (req, res, next) => {
     try {
+        if (req.user.role == "ADMIN") {
+            return next()
+        }
         const isOwner = await db.post.findFirstOrThrow({
             where: {
                 userId: req.user.id
@@ -21,6 +24,17 @@ const isUsersPost: RequestHandler = async (req, res, next) => {
     }
 }
 
+// const admin: RequestHandler = async (req, res, next) => {
+//     try {
+//       if (req.user.role == "ADMIN") {
+//         return next()
+//       }
+//       throw new Error('You should not be here')
+//     } catch(e) {
+//       return res.status(400).json({ message: 'You are not the owner' })
+//     }
+//   } 
+
 app.get('/all', async (req, res) => {
     const currentYear = new Date().getFullYear();
 
@@ -34,17 +48,16 @@ app.get('/all', async (req, res) => {
     const postsFromThisYear = await db.post.findMany({
         where: {
             createdAt: {
-                gte: new Date(`${currentYear}-01-01`),
-                lt: new Date(`${currentYear + 1}-01-01`)
+                gte: new Date(`${timeStamp}`),
             }
         }
     });
     const allPost = await db.post.findMany({
         include: {
             Comments: {
-                include: { user:true}
+                include: { user: true }
             },
-            user:true
+            user: true
         },
         orderBy: {
             createdAt: 'desc'
@@ -73,9 +86,9 @@ app.get('/:uuid', async (req, res) => {
             },
             include: {
                 Comments: {
-                    include: { user:true}
+                    include: { user: true }
                 },
-                user:true
+                user: true
             }
         })
 
@@ -109,11 +122,12 @@ app.post(
 
 app.put(
     '/:uuid',
-    isAdmin || isUsersPost,
+    isUsersPost,
     body('title').exists().isString().notEmpty(),
     body('text').exists().isString().notEmpty(),
     async (req, res) => {
         try {
+            console.log("hello");
             validationResult(req).throw()
             const updatedPost = await db.post.update({
                 where: {
@@ -132,7 +146,7 @@ app.put(
     })
 //faire une condition qui vérifie le userId du post et le userId du signin
 app.delete('/:uuid',
-    isAdmin || isUsersPost,
+    isUsersPost,
     async (req, res) => {
         try {
             await db.post.delete({

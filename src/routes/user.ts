@@ -1,8 +1,19 @@
 import express from 'express'
 import db from '../db'
-import isAdmin from "./comment"
+import { Request, RequestHandler, Response, Router } from "express";
 
 const app = express.Router()
+
+const isAdmin: RequestHandler = async (req, res, next) => {
+  try {
+    if (req.user.role == "ADMIN") {
+      return next()
+    }
+    throw new Error('You should not be here')
+  } catch(e) {
+    return res.status(400).json({ message: 'You are not the owner' })
+  }
+} 
 
 app.delete(
     '/user/:uuid',

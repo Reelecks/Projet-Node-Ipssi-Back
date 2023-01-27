@@ -5,33 +5,23 @@ import { body, validationResult } from 'express-validator'
 const app = Router()
 
 const isUsersComment: RequestHandler = async (req, res, next) => {
-    try {
+  try {
+      if (req.user.role == "ADMIN") {
+          return next()
+      }
       const isOwner = await db.comment.findFirstOrThrow({
-        where: {
-          post:{
-            userId: req.user.id
+          where: {
+              userId: req.user.id
           }
-        }
       })
       if (isOwner) {
-        return next()
+          return next()
       }
       throw new Error('You should not be here')
-    } catch(e) {
+  } catch (e) {
       return res.status(400).json({ message: 'You are not the owner' })
-    }
-  } 
-
-  const isAdmin: RequestHandler = async (req, res, next) => {
-    try {
-      if (req.user.role == "ADMIN") {
-        return next()
-      }
-      throw new Error('You should not be here')
-    } catch(e) {
-      return res.status(400).json({ message: 'You are not the owner' })
-    }
-  } 
+  }
+}
 
   app.get('/', async (req, res) => {
     const comment = await db.comment.findMany({
@@ -66,7 +56,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   
   app.put(
     '/:uuid',
-    isAdmin || isUsersComment,
+    isUsersComment,
     body('texte').isLength({ min: 1 }),
     async (req, res) => {
       try {
@@ -88,7 +78,7 @@ const isUsersComment: RequestHandler = async (req, res, next) => {
   
   app.delete(
     '/:uuid',
-    isAdmin || isUsersComment,
+    isUsersComment,
     async (req, res) => {
       try {
         const deletedId = req.params.uuid
